@@ -37,12 +37,11 @@ kpn_final <- kpn_sum[!duplicated(kpn_sum$kpnno),]
 
 
 # pedigree ####
-library(kinship2)
-
-pedigree <- pedigree(id=kpn_final$kpnno,momid=kpn_final$mothername,dadid=kpn_final$fathername,sex=kpn_final$sex)
-
-plot(pedigree)
-
+# library(kinship2)
+# 
+# pedigree <- pedigree(id=kpn_final$kpnno,momid=kpn_final$mothername,dadid=kpn_final$fathername,sex=kpn_final$sex)
+# 
+# plot(pedigree)
 
 
 # networkD3 ####
@@ -59,7 +58,7 @@ pre <- nt %>%
   graph_from_data_frame %>%
   igraph_to_networkD3
 
-pre$nodes$group <- ifelse(pre$nodes$name %in% nt$R0, "founder", "sons")
+pre$nodes$group <- ifelse(pre$nodes$name %in% nt$R0, "sons","founders")
 
 networkD3::forceNetwork(Links = pre$links, Nodes = pre$nodes,
                         colourScale = JS("d3.scaleOrdinal(d3.schemeCategory10);"),
