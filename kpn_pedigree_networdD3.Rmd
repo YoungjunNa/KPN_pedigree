@@ -1,7 +1,8 @@
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+options(warn=-1)
 library(dplyr)
 
 kpn <- readxl::read_excel("kpn_family.xlsx")
-str(kpn)
 kpn <- filter(kpn, is.na(kpnno)==FALSE)
 kpn$kpnno <- paste0("KPN",kpn$kpnno)
 
@@ -35,16 +36,6 @@ kpn_sum <- rbind(kpn2,kpn3,kpn1,kpn4,kpn5,kpn6,kpn7)
 # is.na(kpn_sum$kpnno) %>% table()
 kpn_final <- kpn_sum[!duplicated(kpn_sum$kpnno),]
 
-
-# pedigree ####
-library(kinship2)
-
-pedigree <- pedigree(id=kpn_final$kpnno,momid=kpn_final$mothername,dadid=kpn_final$fathername,sex=kpn_final$sex)
-
-plot(pedigree)
-
-
-
 # networkD3 ####
 pacman::p_load("igraph","networkD3")
 
@@ -68,3 +59,6 @@ networkD3::forceNetwork(Links = pre$links, Nodes = pre$nodes,
                         Group = "group", opacity = 0.9, zoom = T,
                         fontSize = 20, fontFamily = "serif", legend = T,
                         opacityNoHover = 0.1)
+
+```
+
